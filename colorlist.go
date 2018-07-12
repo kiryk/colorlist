@@ -43,7 +43,7 @@ func (cs byFreq) Swap(i, j int)      { cs[i], cs[j] = cs[j], cs[i] }
 
 func (c *ColorStats) RGB() string {
 	r, g, b, _ := c.Color.RGBA()
-	return fmt.Sprintf("#%02x%02x%02x", r/0x100, g/0x100, b/0x100)
+	return fmt.Sprintf("#%02x%02x%02x", r>>8, g>>8, b>>8)
 }
 
 func PrintStats(w io.Writer, stats []ColorStats) {
