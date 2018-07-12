@@ -53,7 +53,7 @@ func PrintStats(w io.Writer, stats []ColorStats) {
 func ReadStats(r io.Reader) ([]ColorStats, error) {
 	img, err := png.Decode(r)
 	if err != nil {
-		return stats, err
+		return []ColorStats{}, err
 	}
 
 	counts := make(map[color.Color]int)
