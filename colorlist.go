@@ -24,7 +24,7 @@ var tmpl = template.Must(template.New("output").Parse(`
 	<body>
 		<table>
 		{{range .}}
-			<tr><td style="background-color: {{.RGB}};width: 10pt;">{{.F}}</td></tr>
+		<tr><td style="background-color: {{.RGB}};width: 10pt;">{{.Freq}}</td></tr>
 		{{end}}
 		</table>
 	</body>
@@ -33,16 +33,16 @@ var tmpl = template.Must(template.New("output").Parse(`
 
 type byFreq []ColorStats
 type ColorStats struct {
-	C color.Color
-	F int
+	Color color.Color
+	Freq int
 }
 
-func (cfs byFreq) Len() int           { return len(cfs) }
-func (cfs byFreq) Less(i, j int) bool { return cfs[i].F < cfs[j].F }
-func (cfs byFreq) Swap(i, j int)      { cfs[i], cfs[j] = cfs[j], cfs[i] }
+func (cs byFreq) Len() int           { return len(cs) }
+func (cs byFreq) Less(i, j int) bool { return cs[i].Freq < cs[j].Freq }
+func (cs byFreq) Swap(i, j int)      { cs[i], cs[j] = cs[j], cs[i] }
 
 func (c *ColorStats) RGB() string {
-	r, g, b, _ := c.C.RGBA()
+	r, g, b, _ := c.Color.RGBA()
 	return fmt.Sprintf("#%02x%02x%02x", r/0x100, g/0x100, b/0x100)
 }
 
@@ -64,8 +64,8 @@ func ReadStats(r io.Reader) ([]ColorStats, error) {
 	}
 
 	stats := []ColorStats{}
-	for c, f := range counts {
-		stats = append(stats, ColorStats{c, f})
+	for color, freq := range counts {
+		stats = append(stats, ColorStats{color, freq})
 	}
 	return stats, nil
 }
