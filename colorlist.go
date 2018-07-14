@@ -20,12 +20,12 @@ var (
 var tmpl = template.Must(template.New("output").Parse(`
 <!DOCTYPE html>
 <html>
-	<head><style>td {min-width: 30pt; font-family: monospace;}</style></head>
+	<head><style>
+		div { min-width: 40pt; font-family: monospace; display: inline-block; }
+	</style></head>
 	<body>
 		<table>
-		{{range .}}
-		<tr><td style="background-color: {{.RGB}};width: 10pt;">{{.Freq}}</td></tr>
-		{{end}}
+		{{range .}}<div style="background-color: {{.RGB}};">{{.Freq}}</div>{{end}}
 		</table>
 	</body>
 </html>
