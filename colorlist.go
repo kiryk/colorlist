@@ -72,10 +72,13 @@ func ReadStats(r io.Reader) ([]ColorStats, error) {
 
 func main() {
 	var err error
+	r, w := os.Stdin, os.Stdout
 
 	flag.Parse()
 
-	r, w := os.Stdin, os.Stdout
+	if *input == "" {
+		*input = flag.Arg(0)
+	}
 	if *input != "" {
 		if r, err = os.Open(*input); err != nil {
 			log.Fatal(err)
